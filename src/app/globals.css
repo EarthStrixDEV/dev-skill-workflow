@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (Tailwind v4): `.dark` is set on <html> by the inline script in layout.tsx */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Theme tokens (palette taken from the reference image) ---------- */
+:root {
+  --bg: #f6f5fb; /* lavender-white page */
+  --surface: #ffffff;
+  --surface-2: #efedfa;
+  --fg: #0e0e1a;
+  --muted: #5d5b78;
+  --line: #e4e1f4;
+
+  --brand: #5030e8; /* indigo-violet primary */
+  --brand-strong: #3d1fc4;
+  --brand-soft: #ece8ff;
+
+  --ink: #0b0b14; /* near-black hero / strip panels */
+  --ink-2: #151525;
+  --ink-fg: #f4f3ff;
+  --ink-muted: #a9a6c9;
+  --glow: #8b5cf6;
+
+  --pastel-blue: #dce9ff;
+  --pastel-blue-fg: #14274d;
+  --pastel-lime: #e6efb2;
+  --pastel-lime-fg: #2b3305;
+}
+
+.dark {
+  --bg: #090912;
+  --surface: #12121f;
+  --surface-2: #191930;
+  --fg: #f2f1ff;
+  --muted: #a3a0c4;
+  --line: #26263f;
+
+  --brand: #8168ff;
+  --brand-strong: #a590ff;
+  --brand-soft: #231d4d;
+
+  --ink: #05050c;
+  --ink-2: #0f0f1d;
+
+  --pastel-blue: #15264a;
+  --pastel-blue-fg: #d9e7ff;
+  --pastel-lime: #2a3010;
+  --pastel-lime-fg: #eaf3b8;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-fg: var(--ink-fg);
+  --color-ink-muted: var(--ink-muted);
+  --color-glow: var(--glow);
+
+  --color-pastel-blue: var(--pastel-blue);
+  --color-pastel-blue-fg: var(--pastel-blue-fg);
+  --color-pastel-lime: var(--pastel-lime);
+  --color-pastel-lime-fg: var(--pastel-lime-fg);
+
+  --font-sans: var(--font-inter), var(--font-noto-thai), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+}
+
+/* ---------- Language switching (no JS state, no hydration mismatch) ----------
+   <html data-lang="th|en"> is set before first paint by the inline script in layout.tsx.
+   Every bilingual string renders both languages; CSS shows the active one. */
+html[data-lang="th"] .lang-en,
+html[data-lang="en"] .lang-th {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero ring: a comet orbiting the neon ring (SVG viewBox is 360x360, centre 180,180) */
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ring-orbit {
+  transform-origin: 180px 180px;
+  animation: ring-spin 14s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
