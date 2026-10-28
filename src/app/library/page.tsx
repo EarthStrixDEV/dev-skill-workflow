@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { libUi } from "@/content/libraryUi";
-import { L } from "@/components/ui/Lang";
+import TrueFocus from "@/components/react-bits/TrueFocus";
+import { L, LR } from "@/components/ui/Lang";
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { LibraryExplorer } from "@/components/library/LibraryExplorer";
@@ -35,9 +36,27 @@ export default function LibraryPage() {
           <p className="mb-2 text-sm font-semibold tracking-wide text-brand">
             <L v={libUi.page.eyebrow} />
           </p>
-          <h1 className="text-4xl leading-tight font-bold tracking-tight sm:text-5xl">
-            <L v={libUi.page.title} />
-          </h1>
+          {/* TrueFocus renders a <div>, so the heading role goes on a div (not <h1>). */}
+          <div
+            role="heading"
+            aria-level={1}
+            className="text-4xl leading-tight font-bold tracking-tight sm:text-5xl"
+          >
+            <LR v={libUi.page.title} block>
+              {(t) => (
+                <div className="[&>div]:justify-start! [&_span]:text-4xl! sm:[&_span]:text-5xl! [&_span]:font-bold!">
+                  <TrueFocus
+                    sentence={t}
+                    blurAmount={1}
+                    unfocusedOpacity={0.8}
+                    borderColor="#8b5cf6"
+                    animationDuration={0.5}
+                    pauseBetweenAnimations={1.2}
+                  />
+                </div>
+              )}
+            </LR>
+          </div>
           <p className="mt-4 text-base leading-relaxed text-muted">
             <L v={libUi.page.subtitle} />
           </p>

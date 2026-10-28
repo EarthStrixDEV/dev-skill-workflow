@@ -10,7 +10,7 @@ import {
   usageOf,
   type ProviderId,
 } from "@/content/library";
-import { itemsLabel, libUi } from "@/content/libraryUi";
+import { libUi } from "@/content/libraryUi";
 import { useCases, type ToolKind, type UseCaseId } from "@/content/workflow";
 import { L } from "@/components/ui/Lang";
 import { Reveal } from "@/components/ui/Reveal";
@@ -19,6 +19,7 @@ import { SearchIcon } from "@/components/ui/icons";
 import { InstallStrip } from "./InstallStrip";
 import { ItemCard } from "./ItemCard";
 import { ItemDialog } from "./ItemDialog";
+import { ResultCount } from "./ResultCount";
 
 type KindFilter = "all" | Exclude<ToolKind, "agent">;
 type ProviderFilter = "all" | ProviderId;
@@ -171,7 +172,7 @@ export function LibraryExplorer() {
 
         <div className="mt-6 mb-4 flex items-center justify-between gap-3">
           <p role="status" className="text-sm text-muted">
-            <L v={itemsLabel(matches.length)} />
+            <ResultCount n={matches.length} />
           </p>
           {filtered && (
             <button

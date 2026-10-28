@@ -1,5 +1,7 @@
 "use client";
 
+import { useReducedMotion } from "motion/react";
+import ClickSpark from "@/components/react-bits/ClickSpark";
 import SpotlightCard from "@/components/react-bits/SpotlightCard";
 import { libraryItems, providers, type ProviderId } from "@/content/library";
 import { itemsLabel, libUi } from "@/content/libraryUi";
@@ -12,6 +14,7 @@ import { CommandBlock } from "./CommandBlock";
 
 /** One card per source: its install commands (or "nothing to install") and a link to the original. */
 export function InstallStrip({ onShowItems }: { onShowItems: (id: ProviderId) => void }) {
+  const reduce = useReducedMotion();
   return (
     <section id="install" className="pt-12">
       <SectionHeading eyebrow={libUi.install.eyebrow} title={libUi.install.title} />
@@ -19,6 +22,14 @@ export function InstallStrip({ onShowItems }: { onShowItems: (id: ProviderId) =>
         <L v={libUi.install.hint} />
       </p>
 
+      {/* sparkColor is canvas-parsed: hex only. `disabled` turns the sparks off for reduced motion. */}
+      <ClickSpark
+        sparkColor="#8b5cf6"
+        sparkCount={8}
+        duration={450}
+        disabled={reduce === true}
+        style={{ height: "auto" }}
+      >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {providers.map((p, i) => {
           const count = libraryItems.filter((it) => it.provider === p.id).length;
@@ -89,6 +100,7 @@ export function InstallStrip({ onShowItems }: { onShowItems: (id: ProviderId) =>
           );
         })}
       </div>
+      </ClickSpark>
     </section>
   );
 }

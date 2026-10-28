@@ -2,7 +2,7 @@
 
 ## React Bits
 
-The components in `src/components/react-bits/` (BlurText, ShinyText, SpotlightCard, CountUp, Magnet, Aurora) are copied unmodified from React Bits (TS-TW variants), https://reactbits.dev/ , source: https://github.com/DavidHDev/react-bits , registry: https://reactbits.dev/r/<Name>-TS-TW.json .
+The components in `src/components/react-bits/` (BlurText, ShinyText, SpotlightCard, CountUp, Magnet, Aurora, GradientText, RotatingText, TrueFocus, DecryptedText, ScrollVelocity, GlareHover, StarBorder, ClickSpark, Noise, Counter, PixelCard) are copied unmodified from React Bits (TS-TW variants), https://reactbits.dev/ , source: https://github.com/DavidHDev/react-bits , registry: https://reactbits.dev/r/<Name>-TS-TW.json .
 
 They are used under the "MIT + Commons Clause" license reproduced below. They are used here as part of a website; they must not be sold, sublicensed or redistributed as components.
 

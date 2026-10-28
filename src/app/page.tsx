@@ -1,5 +1,6 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { SkillBand } from "@/components/sections/SkillBand";
 import { Explorer } from "@/components/sections/Explorer";
 import { Overview } from "@/components/sections/Overview";
 import { Sizes } from "@/components/sections/Sizes";
@@ -17,6 +18,7 @@ export default function Home() {
       <Header />
       <main id="main">
         <Hero />
+        <SkillBand />
         <Explorer />
         <Overview />
         <Sizes />

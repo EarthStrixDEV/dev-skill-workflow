@@ -1,13 +1,16 @@
 import BlurText from "@/components/react-bits/BlurText";
 import CountUp from "@/components/react-bits/CountUp";
 import Magnet from "@/components/react-bits/Magnet";
+import Noise from "@/components/react-bits/Noise";
 import ShinyText from "@/components/react-bits/ShinyText";
+import StarBorder from "@/components/react-bits/StarBorder";
 import { ui } from "@/content/ui";
 import { stats } from "@/content/workflow";
 import { L, LR } from "@/components/ui/Lang";
 import { ArrowIcon } from "@/components/ui/icons";
 import { HeroBackground } from "./HeroBackground";
 import { HeroRing } from "./HeroRing";
+import { HeroRotator } from "./HeroRotator";
 
 const statItems = [
   { n: stats.steps, label: ui.hero.statSteps },
@@ -21,6 +24,10 @@ export function Hero() {
     <section id="top" className="mx-auto max-w-7xl px-5 pt-6 sm:px-8">
       <div className="relative isolate overflow-hidden rounded-panel bg-ink text-ink-fg">
         <HeroBackground />
+        {/* Static grain (fps 0). Hidden on phones: its dust canvas costs memory even when unused. */}
+        <div className="hidden md:block">
+          <Noise fps={0} opacity={0.08} blendMode="soft-light" />
+        </div>
 
         <div className="relative grid items-center gap-10 px-6 py-14 sm:px-12 lg:grid-cols-[1.2fr_0.8fr] lg:py-20">
           <div>
@@ -50,6 +57,8 @@ export function Hero() {
               </LR>
             </div>
 
+            <HeroRotator />
+
             <div className="mt-5 max-w-xl text-base sm:text-lg">
               <LR v={ui.hero.subtitle} block>
                 {(t) => (
@@ -62,13 +71,20 @@ export function Hero() {
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Magnet padding={40} magnetStrength={3} wrapperClassName="inline-block">
-                <a
+                {/* color/trailColor are parsed in JS (hex only, no CSS variables); the rest accept var(). */}
+                <StarBorder
+                  as="a"
                   href="#flow"
-                  className="inline-flex h-12 items-center gap-2 rounded-full bg-[#5030e8] px-6 text-sm font-semibold text-white shadow-lg shadow-[#5030e8]/40 transition hover:brightness-110"
+                  color="#a78bfa"
+                  backgroundColor="#5030e8"
+                  textColor="#ffffff"
+                  duration={6}
+                  radius={24}
+                  className="h-12 text-sm font-semibold"
                 >
                   <L v={ui.hero.ctaPrimary} />
                   <ArrowIcon className="size-4" />
-                </a>
+                </StarBorder>
               </Magnet>
               <Magnet padding={40} magnetStrength={3} wrapperClassName="inline-block">
                 <a
