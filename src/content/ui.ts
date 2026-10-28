@@ -1,4 +1,8 @@
 import type { Bi } from "./types";
+import { useCases } from "./workflow";
+
+/** Counted from the data so the page text never drifts from the use cases shown. */
+const useCaseCount = useCases.length;
 
 /** Page-level text. Skill and agent names are never translated and live in workflow.ts. */
 export const ui = {
@@ -15,8 +19,8 @@ export const ui = {
     badge: { th: "แผนผังสำหรับงาน dev", en: "A map for dev work" },
     title: { th: "ใช้ skill ถูกตัว ถูกจังหวะ", en: "The right skill at the right moment" },
     subtitle: {
-      th: "จากไอเดียถึงโค้ดที่ปล่อยได้ ครบ 4 use case ของงานพัฒนาซอฟต์แวร์",
-      en: "From idea to shipped code, across the 4 use cases of software development.",
+      th: `จากไอเดียถึงโค้ดที่ปล่อยได้ ครบ ${useCaseCount} use case ของงานพัฒนาซอฟต์แวร์`,
+      en: `From idea to shipped code, across the ${useCaseCount} use cases of software development.`,
     },
     ctaPrimary: { th: "ดูขั้นตอน", en: "See the steps" },
     ctaSecondary: { th: "ภาพรวม 7 ขั้น", en: "The 7-step overview" },
@@ -28,7 +32,10 @@ export const ui = {
 
   usecases: {
     eyebrow: { th: "เลือกงานที่กำลังทำ", en: "Pick what you are doing" },
-    title: { th: "4 use case ของงาน dev", en: "The 4 dev use cases" },
+    title: {
+      th: `${useCaseCount} use case ของงาน dev`,
+      en: `The ${useCaseCount} dev use cases`,
+    },
     open: { th: "ดูขั้นตอน", en: "View steps" },
   },
 

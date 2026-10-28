@@ -108,6 +108,18 @@ export function UseCaseIcon({ id, ...props }: IconProps & { id: UseCaseId }) {
           <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
         </svg>
       );
+    case "migration":
+      return (
+        <svg {...stroke} {...props}>
+          <path d="M4 8h13M13 4l4 4-4 4M20 16H7M11 12l-4 4 4 4" />
+        </svg>
+      );
+    case "refactor":
+      return (
+        <svg {...stroke} {...props}>
+          <path d="M8 4C6 4 5 5 5 7v2c0 1.2-.8 2-2 3 1.2 1 2 1.8 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.2.8 2 2 3-1.2 1-2 1.8-2 3v2c0 2-1 3-3 3" />
+        </svg>
+      );
     case "review":
       return (
         <svg {...stroke} {...props}>

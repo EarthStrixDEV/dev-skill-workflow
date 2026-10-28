@@ -13,14 +13,11 @@ const SKIN: Record<UseCase["accent"], { card: string; sub: string }> = {
   },
   blue: { card: "bg-pastel-blue text-pastel-blue-fg", sub: "opacity-75" },
   lime: { card: "bg-pastel-lime text-pastel-lime-fg", sub: "opacity-75" },
-};
-
-/** Bento grid mirrors the reference layout: two tall cards, then two stacked cards. */
-const LAYOUT: Record<UseCaseId, string> = {
-  feature: "md:col-span-5 md:row-span-2 min-h-[340px]",
-  bug: "md:col-span-4 md:row-span-2 min-h-[340px]",
-  perf: "md:col-span-3 min-h-[200px]",
-  review: "md:col-span-3 min-h-[200px]",
+  lavender: { card: "bg-brand-soft text-brand-strong", sub: "opacity-80" },
+  slate: {
+    card: "bg-linear-to-br from-[#2e2c52] to-[#15152b] text-white",
+    sub: "text-white/70",
+  },
 };
 
 function uniqueTools(useCase: UseCase) {
@@ -30,6 +27,7 @@ function uniqueTools(useCase: UseCase) {
     .filter((t) => (seen.has(t.name) ? false : (seen.add(t.name), true)));
 }
 
+/** An even grid (3 columns on desktop) so any number of use cases lays out cleanly. */
 export function UseCaseBento({
   activeId,
   onOpen,
@@ -38,14 +36,13 @@ export function UseCaseBento({
   onOpen: (id: UseCaseId) => void;
 }) {
   return (
-    <div className="grid gap-4 md:grid-cols-12">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {useCases.map((uc, i) => {
         const skin = SKIN[uc.accent];
-        const big = uc.id === "feature" || uc.id === "bug";
-        const tools = uniqueTools(uc).slice(0, big ? 4 : 0);
+        const tools = uniqueTools(uc).slice(0, 3);
         const active = uc.id === activeId;
         return (
-          <Reveal key={uc.id} delay={i * 0.08} className={LAYOUT[uc.id]}>
+          <Reveal key={uc.id} delay={(i % 3) * 0.08} className="h-full min-h-[270px]">
             <button
               type="button"
               onClick={() => onOpen(uc.id)}
@@ -76,11 +73,7 @@ export function UseCaseBento({
                   </span>
                 </span>
 
-                <span
-                  className={`mt-6 block font-bold tracking-tight ${
-                    big ? "text-2xl sm:text-3xl" : "text-xl"
-                  }`}
-                >
+                <span className="mt-6 block text-2xl font-bold tracking-tight">
                   <L v={uc.name} />
                 </span>
                 <span className={`mt-2 block text-sm leading-relaxed ${skin.sub}`}>

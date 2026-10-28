@@ -136,17 +136,17 @@ export const overviewSteps: Step[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* The four use cases                                                  */
+/* The use cases                                                       */
 /* ------------------------------------------------------------------ */
 
-export type UseCaseId = "feature" | "bug" | "perf" | "review";
+export type UseCaseId = "feature" | "bug" | "perf" | "migration" | "refactor" | "review";
 
 export type UseCase = {
   id: UseCaseId;
   name: Bi;
   tagline: Bi;
   /** Which pastel/brand colour the bento card uses. */
-  accent: "violet" | "blue" | "lime" | "ink";
+  accent: "violet" | "blue" | "lime" | "ink" | "lavender" | "slate";
   /** false: the steps are independent jobs, not a sequence. */
   ordered: boolean;
   steps: Step[];
@@ -359,6 +359,156 @@ export const useCases: UseCase[] = [
           th: "เก็บกวาดแล้วหาบั๊ก",
           en: "Tidy, then hunt bugs.",
         },
+        tools: [skill("simplify"), skill("code-review")],
+        outcome: { th: "diff ที่ผ่านรีวิว", en: "A reviewed diff." },
+      },
+    ],
+  },
+  {
+    id: "migration",
+    name: { th: "Migration / อัปเกรดระบบ", en: "Migration" },
+    tagline: {
+      th: "ย้ายหรืออัปเกรดทีละเฟสเล็ก ๆ โดยมีทางถอยกลับเสมอ",
+      en: "Move or upgrade in small phases, always with a way back.",
+    },
+    accent: "lavender",
+    ordered: true,
+    note: {
+      th: "ย้ายทีละเฟสเล็ก ๆ และต้องมีทางถอยกลับก่อนเริ่มเสมอ ครอบคลุมการอัปเกรดโค้ด/เวอร์ชัน และการย้ายโครงสร้างฐานข้อมูล/ข้อมูล (ไม่รวมการย้าย infrastructure)",
+      en: "Move in small phases and agree a way back before starting. Covers code/version upgrades and database/data migrations (not infrastructure moves).",
+    },
+    steps: [
+      {
+        title: { th: "ซักให้ชัด", en: "Clarify" },
+        desc: {
+          th: "ไล่ถามขอบเขต ความเสี่ยง และแผนถอยกลับก่อนเริ่ม",
+          en: "Interview scope, risks and the rollback plan before starting.",
+        },
+        tools: [skill("grill-me")],
+        outcome: { th: "ขอบเขตและทางถอยที่ตกลงกันแล้ว", en: "Agreed scope and a way back." },
+      },
+      {
+        title: { th: "ประเมินและวางแผน", en: "Assess and plan" },
+        desc: {
+          th: "แตกเป็นเฟสเล็ก ๆ และบันทึกการตัดสินใจสำคัญเป็น ADR",
+          en: "Split into small phases and record key decisions as ADRs.",
+        },
+        tools: [skill("claude-mem:make-plan"), skill("engineering:architecture")],
+        outcome: {
+          th: "แผนแบ่งเฟสพร้อมบันทึกการตัดสินใจ",
+          en: "A phased plan with decisions recorded.",
+        },
+      },
+      {
+        title: { th: "ย้ายทีละเฟส พร้อมทางถอย", en: "Migrate phase by phase" },
+        desc: {
+          th: "ย้ายทีละเฟสเล็ก ๆ ฝั่งฐานข้อมูลใช้ผู้เชี่ยวชาญ SQL",
+          en: "Move in small phases; use the SQL specialist for database work.",
+        },
+        tools: [
+          skill("claude-mem:do"),
+          agent("backend-engineer"),
+          agent("sql-database-engineer"),
+        ],
+        outcome: {
+          th: "เฟสที่ย้ายแล้วและยังถอยกลับได้",
+          en: "A migrated phase that can still be rolled back.",
+        },
+      },
+      {
+        title: { th: "เทียบก่อน-หลัง", en: "Compare before and after" },
+        desc: {
+          th: "ทดสอบ regression เทียบพฤติกรรมก่อนและหลังย้าย",
+          en: "Run regression tests comparing behaviour before and after.",
+        },
+        tools: [skill("engineering:testing-strategy"), agent("qa-engineer")],
+        outcome: {
+          th: "หลักฐานว่าพฤติกรรมไม่เปลี่ยน",
+          en: "Evidence that behaviour did not change.",
+        },
+      },
+      {
+        title: { th: "ลองรันจริง + รีวิว", en: "Run it + review" },
+        desc: {
+          th: "เปิดแอปจริงดูว่าทำงาน แล้วรีวิว diff",
+          en: "Launch the real app, then review the diff.",
+        },
+        tools: [skill("run"), skill("code-review")],
+        outcome: {
+          th: "ระบบหลังย้ายที่ทำงานจริงและผ่านรีวิว",
+          en: "The migrated system working for real and reviewed.",
+        },
+      },
+      {
+        title: { th: "ปล่อยพร้อมแผน rollback", en: "Ship with a rollback plan" },
+        desc: {
+          th: "เช็กลิสต์ก่อนปล่อย แล้วปล่อยโดยมีแผนถอยกลับพร้อม",
+          en: "Run the pre-deploy checklist, then release with the way back ready.",
+        },
+        tools: [skill("engineering:deploy-checklist"), skill("claude-mem:release")],
+        outcome: { th: "ขึ้น production พร้อมแผนถอยกลับ", en: "Live in production with a way back." },
+      },
+    ],
+  },
+  {
+    id: "refactor",
+    name: { th: "Refactoring / Clean Code", en: "Refactoring / clean code" },
+    tagline: {
+      th: "จัดโครงสร้างให้อ่านง่ายขึ้น โดยพฤติกรรมภายนอกต้องเหมือนเดิม",
+      en: "Make the structure easier to read while behaviour stays identical.",
+    },
+    accent: "slate",
+    ordered: true,
+    note: {
+      th: "Refactor ไม่เพิ่มฟีเจอร์ใหม่ และควรแยกจากงานแก้บั๊ก",
+      en: "Refactoring adds no new features and should be kept separate from bug fixes.",
+    },
+    steps: [
+      {
+        title: { th: "หาจุดที่ควรปรับ", en: "Find what to improve" },
+        desc: {
+          th: "สำรวจโค้ดและจัดลำดับหนี้ทางเทคนิค",
+          en: "Survey the code and prioritise technical debt.",
+        },
+        tools: [skill("engineering:tech-debt"), skill("claude-mem:smart-explore")],
+        outcome: {
+          th: "รายการจุดที่ควรปรับ เรียงตามความสำคัญ",
+          en: "A prioritised list of what to improve.",
+        },
+      },
+      {
+        title: { th: "ล็อกพฤติกรรมด้วยเทสต์", en: "Lock behaviour with tests" },
+        desc: {
+          th: "เขียนเทสต์ครอบพฤติกรรมปัจจุบันก่อนแตะโค้ด",
+          en: "Cover the current behaviour with tests before touching the code.",
+        },
+        tools: [skill("engineering:testing-strategy"), agent("qa-engineer")],
+        outcome: { th: "เทสต์ที่ผ่านก่อนเริ่มปรับ", en: "Passing tests before any change." },
+      },
+      {
+        title: { th: "ปรับโครงสร้างทีละก้าว", en: "Restructure in small steps" },
+        desc: {
+          th: "ปรับโครงสร้างและลบโค้ดที่ไม่ได้ใช้ทีละก้าว พฤติกรรมภายนอกต้องเหมือนเดิม",
+          en: "Restructure and remove unused code one step at a time; external behaviour must stay identical.",
+        },
+        tools: [skill("claude-mem:do"), agent("code-improver")],
+        outcome: {
+          th: "โค้ดที่เรียบกว่าเดิม เทสต์ยังผ่านทุกก้าว",
+          en: "Cleaner code with tests green at every step.",
+        },
+      },
+      {
+        title: { th: "ลองรันจริง", en: "Run it" },
+        desc: {
+          th: "เปิดแอปจริงยืนยันว่าทำงานเหมือนเดิม",
+          en: "Launch the real app to confirm it works as before.",
+        },
+        tools: [skill("run")],
+        outcome: { th: "แอปทำงานเหมือนเดิม", en: "The app behaving as before." },
+      },
+      {
+        title: { th: "เก็บกวาดแล้วรีวิว", en: "Tidy, then review" },
+        desc: { th: "เก็บกวาดก่อน แล้วหาบั๊ก", en: "Tidy first, then hunt bugs." },
         tools: [skill("simplify"), skill("code-review")],
         outcome: { th: "diff ที่ผ่านรีวิว", en: "A reviewed diff." },
       },
