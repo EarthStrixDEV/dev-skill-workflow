@@ -15,7 +15,14 @@ export function HeroBackground() {
     const update = () => setWebgl(wide.matches);
     update();
     wide.addEventListener("change", update);
-    return () => wide.removeEventListener("change", update);
+    return () => {
+      wide.removeEventListener("change", update);
+      // Aurora calls loseContext() when its effect is cleaned up. With Cache Components,
+      // Next hides this page on navigation and re-shows it later, re-running effects on the
+      // SAME canvas element, which would hand back a dead context (a grey, broken hero).
+      // Unmounting Aurora here makes the re-show create a brand-new canvas.
+      setWebgl(false);
+    };
   }, []);
 
   return (
