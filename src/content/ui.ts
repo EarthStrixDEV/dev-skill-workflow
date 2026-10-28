@@ -41,6 +41,7 @@ export const ui = {
     },
     outcome: { th: "ผลลัพธ์", en: "Outcome" },
     skill: { th: "Skill", en: "Skill" },
+    command: { th: "Command", en: "Command" },
     agent: { th: "Agent", en: "Agent" },
     legend: { th: "ชนิดเครื่องมือ", en: "Tool types" },
   },

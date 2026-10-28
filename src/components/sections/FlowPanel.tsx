@@ -1,25 +1,17 @@
 "use client";
 
-import type { CSSProperties } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import SpotlightCard from "@/components/react-bits/SpotlightCard";
 import type { Step, UseCase } from "@/content/workflow";
 import { ui } from "@/content/ui";
 import { L } from "@/components/ui/Lang";
+import { CARD_VARS } from "@/components/ui/cardVars";
 import { ToolChips } from "@/components/ui/ToolChip";
 import { CheckIcon, InfoIcon, UseCaseIcon } from "@/components/ui/icons";
 
 /** Seconds between one timeline node lighting up and the next. */
 const SEG = 0.55;
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-/** SpotlightCard paints its own surface; point it at the theme tokens so it follows Light/Dark. */
-const CARD_VARS = {
-  "--spotlight-card-surface": "var(--surface)",
-  "--spotlight-card-border": "var(--line)",
-  "--spotlight-card-shadow":
-    "0 1px 2px rgba(20,20,40,0.04), 0 18px 40px -26px rgba(60,40,160,0.28)",
-} as CSSProperties;
 
 function StepCard({ step }: { step: Step }) {
   return (
@@ -213,6 +205,10 @@ function UseCaseSummary({ useCase }: { useCase: UseCase }) {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-2.5 py-1 text-brand-strong">
             <span className="size-1.5 rounded-full bg-brand" aria-hidden="true" />
             <L v={ui.flow.skill} />
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-pastel-blue px-2.5 py-1 text-pastel-blue-fg">
+            <span className="size-1.5 rounded-full bg-pastel-blue-fg" aria-hidden="true" />
+            <L v={ui.flow.command} />
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-pastel-lime px-2.5 py-1 text-pastel-lime-fg">
             <span className="size-1.5 rounded-full bg-pastel-lime-fg" aria-hidden="true" />

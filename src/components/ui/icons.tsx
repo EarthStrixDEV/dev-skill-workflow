@@ -44,6 +44,40 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function CopyIcon(props: IconProps) {
+  return (
+    <svg {...stroke} {...props}>
+      <rect x="9" y="9" width="11" height="11" rx="2.5" />
+      <path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15" />
+    </svg>
+  );
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <svg {...stroke} {...props}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.3-4.3" />
+    </svg>
+  );
+}
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
+export function ExternalIcon(props: IconProps) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
+    </svg>
+  );
+}
+
 export function InfoIcon(props: IconProps) {
   return (
     <svg {...stroke} {...props}>

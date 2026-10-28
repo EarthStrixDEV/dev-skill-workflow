@@ -1,9 +1,10 @@
 import type { Bi } from "./types";
 
-export type ToolKind = "skill" | "agent";
+export type ToolKind = "skill" | "command" | "agent";
 export type Tool = { name: string; kind: ToolKind };
 
 const skill = (name: string): Tool => ({ name, kind: "skill" });
+const command = (name: string): Tool => ({ name, kind: "command" });
 const agent = (name: string): Tool => ({ name, kind: "agent" });
 
 export type Step = {
@@ -24,7 +25,7 @@ export const setupStep: Step = {
     th: "ทำครั้งเดียวต่อ repo ให้ Claude รู้จักโปรเจกต์ก่อนเริ่มงานจริง",
     en: "Once per repo, so Claude knows the project before real work starts.",
   },
-  tools: [skill("init"), skill("claude-mem:learn-codebase")],
+  tools: [command("init"), skill("claude-mem:learn-codebase")],
   outcome: {
     th: "ได้ CLAUDE.md และความเข้าใจโครงสร้างโค้ด",
     en: "A CLAUDE.md and an understanding of the code structure.",
@@ -52,7 +53,7 @@ export const overviewSteps: Step[] = [
     },
     tools: [
       skill("claude-mem:make-plan"),
-      skill("feature-dev:feature-dev"),
+      command("feature-dev:feature-dev"),
       skill("engineering:architecture"),
       skill("engineering:system-design"),
     ],
@@ -183,7 +184,7 @@ export const useCases: UseCase[] = [
         },
         tools: [
           skill("claude-mem:make-plan"),
-          skill("feature-dev:feature-dev"),
+          command("feature-dev:feature-dev"),
           skill("engineering:architecture"),
           skill("engineering:system-design"),
         ],
@@ -473,5 +474,6 @@ export const stats = {
   steps: overviewSteps.length,
   useCases: useCases.length,
   skills: new Set(everyTool.filter((t) => t.kind === "skill").map((t) => t.name)).size,
+  commands: new Set(everyTool.filter((t) => t.kind === "command").map((t) => t.name)).size,
   agents: new Set(everyTool.filter((t) => t.kind === "agent").map((t) => t.name)).size,
 };
